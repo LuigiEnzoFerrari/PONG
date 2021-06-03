@@ -2,18 +2,14 @@
 # define STRUCTS_H
 
 # include <SDL2/SDL.h>
-# include <stdio.h>
-# include <stdint.h>
-# include <stdbool.h>
-
-# define WINDOW_HEIGHT	414
-# define WINDOW_WIDTH	736
 
 typedef struct s_phisycs
 {
 	float	P1_v;
 	float	P2_v;
-	float	ball_v;
+	float	ball_vx;
+	float	ball_vy;
+	float	last_t;
 }	t_phisycs;
 
 typedef struct s_objects

@@ -1,6 +1,4 @@
-#include "structs.h"
-
-float	last_time;
+#include "pong.h"
 
 int	Init_All(SDL_Window **window, SDL_Renderer **renderer)
 {
@@ -28,40 +26,6 @@ int	Init_All(SDL_Window **window, SDL_Renderer **renderer)
 	return (1);
 }
 
-int	Process_Input(t_objects *objs)
-{
-	SDL_Event	e;
-
-	SDL_PollEvent(&e);
-	if (e.type == SDL_QUIT)
-		return (false);
-	else if (e.key.keysym.sym == SDLK_ESCAPE)
-		return (false);
-	if (e.type == SDL_KEYDOWN)
-	{
-		if (e.key.keysym.sym == SDLK_UP)
-			objs->phys.P1_v = -400;
-		if (e.key.keysym.sym == SDLK_DOWN)
-			objs->phys.P1_v = 400;
-		if (e.key.keysym.sym == SDLK_w)
-			objs->phys.P2_v = -400;
-		if (e.key.keysym.sym == SDLK_s)
-			objs->phys.P2_v = 400;		
-	}
-	else if (e.type == SDL_KEYUP)
-	{
-		if (e.key.keysym.sym == SDLK_UP)
-			objs->phys.P1_v = 0;
-		if (e.key.keysym.sym == SDLK_DOWN)
-			objs->phys.P1_v = 0;
-		if (e.key.keysym.sym == SDLK_w)
-			objs->phys.P2_v = 0;
-		if (e.key.keysym.sym == SDLK_s)
-			objs->phys.P2_v = 0;
-	}
-	return (true);
-}
-
 void	Setup(t_objects *objs)
 {
 	objs->P1.w = WINDOW_WIDTH / 24;
@@ -80,28 +44,10 @@ void	Setup(t_objects *objs)
 	objs->ball.h = objs->P1.w / 2;
 	objs->ball.x = objs->P1.w;
 	objs->ball.y = objs->P1.w;
-}
+	objs->phys.ball_vy = 350;
+	objs->phys.ball_vx = 350;
 
-void	Update(t_objects *objs)
-{
-	float delta_time = (SDL_GetTicks() - last_time) / 1000.0f;
-	last_time = SDL_GetTicks();
-
-	objs->P1.y += delta_time * objs->phys.P1_v;
-	objs->P2.y += delta_time * objs->phys.P2_v;
-	objs->ball.y += delta_time * 50;
-	objs->ball.x += delta_time * 50;
-}
-
-void	Render(SDL_Renderer *renderer, t_objects *objs)
-{
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	SDL_RenderClear(renderer);
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderFillRectF(renderer, &objs->P2);
-	SDL_RenderFillRectF(renderer, &objs->P1);
-	SDL_RenderFillRectF(renderer, &objs->ball);
-	SDL_RenderPresent(renderer);
+	objs->phys.last_t = 0;
 }
 
 void	Destroy_All(SDL_Window **window, SDL_Renderer **renderer)
@@ -118,7 +64,6 @@ int	main(void)
 	t_objects		objs;
 	bool			game;
 
-	last_time = 0;
 	if (!Init_All(&window, &renderer))
 		return (0);
 	Setup(&objs);

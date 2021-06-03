@@ -1,9 +1,15 @@
 NAME = game
+SRCS = srcs
+INC = includes
+FILES = loop.c
+
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 
 build: $(NAME)
 
 $(NAME):
-	gcc -Wall -std=c99 main.c -o game -lSDL2
+	gcc $(CFLAGS) main.c $(SRCS)/$(FILES) -o game -I $(INC) -lSDL2
 
 run:
 	./game
@@ -11,5 +17,6 @@ run:
 clean:
 	rm -f game
 
-re: clean
-	rm -rf game
+re: clean build
+
+.PHONY: build run clean re
