@@ -43,7 +43,7 @@ static void	ball_players_Collision(t_objects *objs)
 	{
 		objs->phys.ball_vx = -objs->phys.ball_vx;
 		objs->ball.x = objs->P1.x + objs->P1.w;
-		objs->phys.random = RandomFloat(1, 2.5);
+		objs->phys.random = RandomFloat(1, 3);
 	}
 }
 

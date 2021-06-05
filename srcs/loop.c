@@ -51,6 +51,12 @@ void	Update(t_objects *objs)
 	objs->ball.x += objs->phys.delta_time * objs->phys.ball_vx
 		* objs->phys.random;
 	collisions(objs);
+	if (objs->ball.x <= 0 || objs->ball.x + objs->ball.w >= WINDOW_WIDTH)
+	{
+		objs->ball.x = (WINDOW_WIDTH / 2) - (objs->ball.w / 2);
+		objs->ball.y = (WINDOW_HEIGHT / 2) - (objs->ball.h / 2);
+		objs->phys.ball_vx = -objs->phys.ball_vx;
+	}
 }
 
 void	Render(SDL_Renderer *renderer, t_objects *objs)
