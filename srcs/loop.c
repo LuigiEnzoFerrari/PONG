@@ -1,5 +1,29 @@
 #include "pong.h"
 
+static void	players_KeyDown(t_objects *objs, SDL_Event e)
+{
+	if (e.key.keysym.sym == SDLK_UP)
+		objs->phys.P1_v = -400;
+	if (e.key.keysym.sym == SDLK_DOWN)
+		objs->phys.P1_v = 400;
+	if (e.key.keysym.sym == SDLK_w)
+		objs->phys.P2_v = -400;
+	if (e.key.keysym.sym == SDLK_s)
+		objs->phys.P2_v = 400;
+}
+
+static void	players_KeyRelease(t_objects *objs, SDL_Event e)
+{
+	if (e.key.keysym.sym == SDLK_UP)
+		objs->phys.P1_v = 0;
+	if (e.key.keysym.sym == SDLK_DOWN)
+		objs->phys.P1_v = 0;
+	if (e.key.keysym.sym == SDLK_w)
+		objs->phys.P2_v = 0;
+	if (e.key.keysym.sym == SDLK_s)
+		objs->phys.P2_v = 0;
+}
+
 bool	Process_Input(t_objects *objs)
 {
 	SDL_Event	e;
@@ -10,48 +34,23 @@ bool	Process_Input(t_objects *objs)
 	else if (e.key.keysym.sym == SDLK_ESCAPE)
 		return (false);
 	if (e.type == SDL_KEYDOWN)
-	{
-		if (e.key.keysym.sym == SDLK_UP)
-			objs->phys.P1_v = -400;
-		if (e.key.keysym.sym == SDLK_DOWN)
-			objs->phys.P1_v = 400;
-		if (e.key.keysym.sym == SDLK_w)
-			objs->phys.P2_v = -400;
-		if (e.key.keysym.sym == SDLK_s)
-			objs->phys.P2_v = 400;		
-	}
+		players_KeyDown(objs, e);
 	else if (e.type == SDL_KEYUP)
-	{
-		if (e.key.keysym.sym == SDLK_UP)
-			objs->phys.P1_v = 0;
-		if (e.key.keysym.sym == SDLK_DOWN)
-			objs->phys.P1_v = 0;
-		if (e.key.keysym.sym == SDLK_w)
-			objs->phys.P2_v = 0;
-		if (e.key.keysym.sym == SDLK_s)
-			objs->phys.P2_v = 0;
-	}
+		players_KeyRelease(objs, e);
 	return (true);
 }
 
 void	Update(t_objects *objs)
 {
-	float delta_time = (SDL_GetTicks() - objs->phys.last_t) / 1000.0f;
+	objs->phys.delta_time = (SDL_GetTicks() - objs->phys.last_t) / 1000.0f;
 	objs->phys.last_t = SDL_GetTicks();
-
-	objs->P1.y += delta_time * objs->phys.P1_v;
-	objs->P2.y += delta_time * objs->phys.P2_v;
-	objs->ball.y += delta_time * objs->phys.ball_vy;
-	objs->ball.x += delta_time * objs->phys.ball_vx;
-
-	if (objs->ball.y <= 0)
-	{
-		objs->phys.ball_vy = -objs->phys.ball_vy;
-
-	}
-	else if (objs->ball.y + objs->ball.h >= WINDOW_HEIGHT)
-		objs->phys.ball_vy = -objs->phys.ball_vy;
-
+	objs->P1.y += objs->phys.delta_time * objs->phys.P1_v;
+	objs->P2.y += objs->phys.delta_time * objs->phys.P2_v;
+	objs->ball.y += objs->phys.delta_time * objs->phys.ball_vy
+		* objs->phys.random;
+	objs->ball.x += objs->phys.delta_time * objs->phys.ball_vx
+		* objs->phys.random;
+	collisions(objs);
 }
 
 void	Render(SDL_Renderer *renderer, t_objects *objs)

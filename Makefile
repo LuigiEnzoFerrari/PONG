@@ -1,7 +1,7 @@
 NAME = game
 SRCS = srcs
 INC = includes
-FILES = loop.c
+FILES = srcs/loop.c srcs/collisions.c srcs/initialization.c
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -9,13 +9,13 @@ CFLAGS = -Wall -Wextra -Werror
 build: $(NAME)
 
 $(NAME):
-	gcc $(CFLAGS) main.c $(SRCS)/$(FILES) -o game -I $(INC) -lSDL2
+	$(CC) $(CFLAGS) main.c $(FILES) -o game -I $(INC) -lSDL2
 
 run:
 	./game
 
 clean:
-	rm -f game
+	@$(RM) game
 
 re: clean build
 

@@ -10,6 +10,8 @@ typedef struct s_phisycs
 	float	ball_vx;
 	float	ball_vy;
 	float	last_t;
+	float	delta_time;
+	float	random;
 }	t_phisycs;
 
 typedef struct s_objects
