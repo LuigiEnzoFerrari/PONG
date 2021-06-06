@@ -12,16 +12,14 @@ int	main(void)
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
 	t_objects		objs;
-	bool			game;
 
 	srand(time(NULL));
 	if (!Init_All(&window, &renderer))
 		return (0);
 	Setup(&objs);
-	game = true;
-	while (game)
+	while (objs.gstat.game)
 	{
-		game = Process_Input(&objs);
+		Process_Input(&objs);
 		Update(&objs);
 		Render(renderer, &objs);
 	}

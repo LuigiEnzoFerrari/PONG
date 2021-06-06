@@ -11,7 +11,7 @@
 # define WINDOW_HEIGHT	576
 # define WINDOW_WIDTH	720
 
-bool	Process_Input(t_objects *objs);
+void	Process_Input(t_objects *objs);
 void	Update(t_objects *objs);
 void	Render(SDL_Renderer *renderer, t_objects *objs);
 int		Init_All(SDL_Window **window, SDL_Renderer **renderer);

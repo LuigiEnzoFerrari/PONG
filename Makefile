@@ -1,7 +1,8 @@
 NAME = game
 SRCS = srcs
 INC = includes
-FILES = srcs/loop.c srcs/collisions.c srcs/initialization.c
+FILES = srcs/collisions.c srcs/initialization.c \
+		srcs/input.c srcs/update.c srcs/render.c
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror

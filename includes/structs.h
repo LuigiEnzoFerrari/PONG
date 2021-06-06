@@ -3,6 +3,12 @@
 
 # include <SDL2/SDL.h>
 
+typedef struct s_gamestatus
+{
+	bool	game;
+	bool	frozen;
+}	t_status;
+
 typedef struct s_phisycs
 {
 	float	P1_v;
@@ -20,6 +26,7 @@ typedef struct s_objects
 	SDL_FRect	P2;
 	SDL_FRect	ball;
 	t_phisycs	phys;
+	t_status	gstat;
 }	t_objects;
 
 #endif
