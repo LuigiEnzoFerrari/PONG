@@ -28,13 +28,13 @@ static float	RandomFloat(float a, float b)
 static void	ball_players_Collision(t_objects *objs)
 {
 	if (objs->ball.x + objs->ball.w >= objs->P2.x
-		&& objs->ball.x +objs->ball.w <= objs->P2.x +objs->P2.w
+		&& objs->ball.x + objs->ball.w <= objs->P2.x + objs->P2.w
 		&& objs->ball.y + objs->ball.h >= objs->P2.y
 		&& objs->ball.y <= objs->P2.y + objs->P2.h)
 	{
 		objs->phys.ball_vx = -objs->phys.ball_vx;
 		objs->ball.x = objs->P2.x - objs->ball.w;
-		objs->phys.random = 1.9;
+		objs->phys.random = RandomFloat(1, 3.0);
 	}
 	else if (objs->ball.x <= objs->P1.x + objs->P1.w
 		&& objs->ball.x >= objs->P1.x

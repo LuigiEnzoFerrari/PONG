@@ -19,7 +19,7 @@ void	Update(t_objects *objs)
 {
 	objs->phys.delta_time = (SDL_GetTicks() - objs->phys.last_t) / 1000.0f;
 	objs->phys.last_t = SDL_GetTicks();
-	if (!objs->gstat.frozen)
+	if (objs->gstat.frozen == false)
 	{
 		objs->P1.y += objs->phys.delta_time * objs->phys.P1_v;
 		objs->P2.y += objs->phys.delta_time * objs->phys.P2_v;

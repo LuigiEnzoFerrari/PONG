@@ -48,4 +48,5 @@ void	Setup(t_objects *objs)
 	objs->phys.random = 1;
 	objs->phys.delta_time = 0;
 	objs->gstat.game = true;
+	objs->gstat.frozen = true;
 }

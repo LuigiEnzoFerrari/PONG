@@ -8,8 +8,8 @@
 # include <math.h>
 # include "structs.h"
 
-# define WINDOW_HEIGHT	576
-# define WINDOW_WIDTH	720
+# define WINDOW_HEIGHT	375
+# define WINDOW_WIDTH	812
 
 void	Process_Input(t_objects *objs);
 void	Update(t_objects *objs);

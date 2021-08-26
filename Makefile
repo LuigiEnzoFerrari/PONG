@@ -1,22 +1,34 @@
+#essential
 NAME = game
-SRCS = srcs
-INC = includes
-FILES = srcs/collisions.c srcs/initialization.c \
-		srcs/input.c srcs/update.c srcs/render.c
+CC = clang
 
-CC = gcc
+#flags
 CFLAGS = -Wall -Wextra -Werror
+SDLFLAGS = `pkg-config --libs --cflags sdl2`
+SANIT = -g -fsanitize=address
+
+#includes
+INC = includes
+HEADERS = $(wildcard $(INC)/*.h)
+
+#sources
+SRCS_PATH = srcs
+SRCS_NAME = collisions.c initialization.c \
+		input.c update.c render.c
+SRCS = $(addprefix $(SRCS_PATH)/, $(SRCS_NAME))
 
 build: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) main.c $(FILES) -o game -I $(INC) -lSDL2
+$(NAME): $(SRCS) $(HEADERS)
+	$(CC) $(CFLAGS) $(SDLFLAGS) main.c $(SRCS) -o $@ -I $(INC) 
 
-run:
+run: $(NAME)
 	./game
 
 clean:
 	@$(RM) game
+
+fclean: clean
 
 re: clean build
 
